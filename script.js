@@ -37,7 +37,7 @@ define(['jquery', 'underscore', 'twigjs'], function ($, _, Twig) {
       },
       settings: function ($modal_body) {
         console.log('settings');
-        let hostingurl = 'https://test.u0605727.plsk.regruhosting.ru/index.php';
+        let hostingurl = 'https://amocrmapiau.u0605727.plsk.regruhosting.ru/index.php';
         $.ajax({
           url: hostingurl,
           type: 'POST',
@@ -136,10 +136,10 @@ define(['jquery', 'underscore', 'twigjs'], function ($, _, Twig) {
         // $('.list__body-right__top__buttons').css({float: 'right'})
         //     .append($cancel_button)
         //     .append($save_button);
-        let hostingurl = 'https://test.u0605727.plsk.regruhosting.ru/index.php';
+        let hostingurl = 'https://amocrmapiau.u0605727.plsk.regruhosting.ru/index.php';
         var flag;
         self.crm_post(
-            'https://test.u0605727.plsk.regruhosting.ru/index.php',
+            'https://amocrmapiau.u0605727.plsk.regruhosting.ru/index.php',
             {
               "action":"getform", "user":self.system()
             },
@@ -434,89 +434,296 @@ define(['jquery', 'underscore', 'twigjs'], function ($, _, Twig) {
                   //     },
                   //     'json',
                   // );
-
-                  // data: [
+                  // data:[
                   //     {
-                  //         "name": "multi select",
+                  //         "name": "Способ оплаты",
                   //         "type": "multiselect",
                   //         "group_id": $('#selectgroup').val(),
                   //         "enums": [
                   //             {
-                  //                 "value": $inputname.val() ,
-                  //                 "sort": 1
-                  //             },
-                  //             {
-                  //                 "value": "2" ,
-                  //                 "sort": 2
-                  //             },
+                  //                 "value": $inputname.val(),
+                  //             }
                   //         ]
                   //     },
                   //     {
-                  //         "name": "multi select",
+                  //         "name": "Предоплата",
                   //         "type": "numeric",
                   //         "group_id": $('#selectgroup').val()
                   //     },
-                  //     // {
-                  //     //     "name": "multi select1",
-                  //     //     "type": "numeric",
-                  //     //     "group_id": $('#selectgroup').val()
-                  //     // },
-                  //     // {
-                  //     //     "name": "multi select2",
-                  //     //     "type": "numeric",
-                  //     //     "group_id": $('#selectgroup').val()
-                  //     // },
-                  //     // {
-                  //     //     "name": "multi select3",
-                  //     //     "type": "numeric",
-                  //     //     "group_id": $('#selectgroup').val()
-                  //     // },
-                  //     // {
-                  //     //     "name": "multi select4",
-                  //     //     "type": "numeric",
-                  //     //     "group_id": $('#selectgroup').val()
-                  //     // },
-                  //
+                  //     {
+                  //         "name": "Остаток",
+                  //         "type": "numeric",
+                  //         "group_id": $('#selectgroup').val()
+                  //     },
+                  //     {
+                  //         "name": "Себестоимость",
+                  //         "type": "numeric",
+                  //         "group_id": $('#selectgroup').val()
+                  //     },
+                  //     {
+                  //         "name": "Доп затраты",
+                  //         "type": "numeric",
+                  //         "group_id": $('#selectgroup').val()
+                  //     },
+                  //     {
+                  //         "name": "Маржа",
+                  //         "type": "numeric",
+                  //         "group_id": $('#selectgroup').val()
+                  //     },
                   // ],
                   var $idform;
                   if ($('#standart').prop('checked') === true){
                       console.log('$(\'#standart\').prop(\'checked\')')
+
+                      var $arrObjects = {};
+                      if ($('#selectgroup').val() === 'default' ||$('#selectgroup').val() === 'statistic' || $('#selectgroup').val() === ''){
+                          $arrObjects[0] = {
+                              "name": "Способ оплаты",
+                              "type": "multiselect",
+                              "enums": [
+                                  {
+                                      "value": $inputname.val()
+                                  }
+                              ]
+                          };
+                          $arrObjects[1] = {
+                              "name": "Предоплата",
+                              "type": "numeric",
+                          };
+                          $arrObjects[2] = {
+                              "name": "Остаток",
+                              "type": "numeric",
+                          };
+                          $arrObjects[3] = {
+                              "name": "Себестоимость",
+                              "type": "numeric",
+                          };
+                          $arrObjects[4] = {
+                              "name": "Доп затраты",
+                              "type": "numeric",
+                          };
+                          $arrObjects[5] = {
+                              "name": "Маржа",
+                              "type": "numeric",
+                          };
+                      }
+                      else {
+                          $arrObjects[0] = {
+                              "name": "Способ оплаты",
+                              "type": "multiselect",
+                              "group_id": $('#selectgroup').val(),
+                              "enums": [
+                                  {
+                                      "value": $inputname.val()
+                                  }
+                              ]
+                          };
+                          $arrObjects[1] = {
+                              "name": "Предоплата",
+                              "type": "numeric",
+                              "group_id": $('#selectgroup').val()
+                          };
+                          $arrObjects[2] = {
+                              "name": "Остаток",
+                              "type": "numeric",
+                              "group_id": $('#selectgroup').val()
+                          };
+                          $arrObjects[3] = {
+                              "name": "Себестоимость",
+                              "type": "numeric",
+                              "group_id": $('#selectgroup').val()
+                          };
+                          $arrObjects[4] = {
+                              "name": "Доп затраты",
+                              "type": "numeric",
+                              "group_id": $('#selectgroup').val()
+                          };
+                          $arrObjects[5] = {
+                              "name": "Маржа",
+                              "type": "numeric",
+                              "group_id": $('#selectgroup').val()
+                          };
+                      }
                       $.ajax({
                           url: "/api/v4/leads/custom_fields",
                           datatype: "application/json",
-                          type: "post",
-                          data:  [
-                              {
-                                  "name": "multi select",
-                                  "type": "multiselect",
-                                  "sort": 510,
-                                  "group_id": $('#selectgroup').val(),
-                                  "enums": [
-                                      {
-                                          "value": "Значение 1",
-                                          "sort": 1
-                                      },
-                                      {
-                                          "value": "Значение 2",
-                                          "sort": 2
-                                      }
-                                  ]
-                              }
-                          ],
-                          success: (data)=>{
+                          method: "post",
+                          data:$arrObjects,
+                          success: (data) => {
                               console.log('success');
                               console.log(data);
+                              // data._embedded.custom_fields[0].id
                               $idform = data;
 
                           },
-                          error: function(e){
+                          error:function (e) {
                               console.log('error');
                               console.log(e);
                           }
                       });
+                      console.log($idform);
+
                   }
-                  if ($('#viborpoler').prop('checked') === true){
-                    console.log('$(\'#viborpoler\').prop(\'checked\')')
+                  if ($('#viborpoler').prop('checked') === true) {
+                      console.log('$(\'#viborpoler\').prop(\'checked\')');
+
+
+
+                      var $arrObjects = {}, $i = 1;
+
+
+                      if ($('#checkbox1').prop('checked') === true) {
+                          if ($('#selectgroup').val() === 'default' || $('#selectgroup').val() === 'statistic' || $('#selectgroup').val() === ''){
+                              $arrObjects[$i] = {
+                                  "name": "Предоплата",
+                                  "type": "numeric",
+                                  "group_id": $('#selectgroup').val()
+                              };
+                              $i++;
+                              console.log('checkbox1 default '+$i);
+
+                          }
+                          else {
+                              console.log('checkbox1 да да ' + $i);
+                              $arrObjects[$i] = {
+                                  "name": "Предоплата",
+                                  "type": "numeric",
+                              };
+                              $i++;
+                              console.log('checkbox1 no no '+$i);
+                          }
+                      }
+                      if ($('#checkbox2').prop('checked') === true) {
+                          if ($('#selectgroup').val() === 'default' || $('#selectgroup').val() === 'statistic' || $('#selectgroup').val() === '') {
+                              $arrObjects[$i] = {
+                                  "name": "Остаток",
+                                  "type": "numeric",
+                              };
+                              $i++;
+                              console.log('checkbox2 default '+ $i);
+                          }
+                          else {
+                              $arrObjects[$i] = {
+                                  "name": "Остаток",
+                                  "type": "numeric",
+                                  "group_id": $('#selectgroup').val()
+                              };
+                              $i++;
+                              console.log('checkbox2 no no  ' + $i);
+                          }
+                      }
+
+
+                      if ($('#selectgroup').val() === 'default' || $('#selectgroup').val() === 'statistic' || $('#selectgroup').val() === ' '){
+                          $arrObjects[0] = {
+                              "name": "Способ оплаты",
+                              "type": "multiselect",
+                              "enums": [
+                                  {
+                                      "value": $inputname.val()
+                                  }
+                              ]
+                          };
+                      }else {
+                          $arrObjects[0] = {
+                              "name": "Способ оплаты",
+                              "type": "multiselect",
+                              "group_id": $('#selectgroup').val(),
+                              "enums": [
+                                  {
+                                      "value": $inputname.val()
+                                  }
+                              ]
+                          };
+                      }
+                      if ($('#checkbox1').prop('checked') === true && $('#selectgroup').val() !== 'default' ||$('#selectgroup').val() !== 'statistic' || $('#selectgroup').val() !== ' ') {
+                          $arrObjects[$i] = {
+                              "name": "Предоплата",
+                              "type": "numeric",
+                              "group_id": $('#selectgroup').val()
+                          };
+                          $i++;
+                      }else {
+                          $arrObjects[$i] = {
+                              "name": "Предоплата",
+                              "type": "numeric",
+                          };
+                          $i++;
+                      }
+                      if ($('#checkbox2').prop('checked') === true && $('#selectgroup').val() !== 'default' ||$('#selectgroup').val() !== 'statistic' || $('#selectgroup').val() !== ' ') {
+                          $arrObjects[$i] = {
+                              "name": "Остаток",
+                              "type": "numeric",
+                              "group_id": $('#selectgroup').val()
+                          };
+                          $i++;
+                      }else {
+                          $arrObjects[$i] = {
+                              "name": "Остаток",
+                              "type": "numeric",
+                          };
+                          $i++;
+                      }
+                      if ($('#checkbox3').prop('checked') === true && $('#selectgroup').val() !== 'default' ||$('#selectgroup').val() !== 'statistic' || $('#selectgroup').val() !== ' ') {
+                          $arrObjects[$i] = {
+                              "name": "Себестоимость",
+                              "type": "numeric",
+                              "group_id": $('#selectgroup').val()
+                          };
+                          $i++;
+                      }else {
+                          $arrObjects[$i] = {
+                              "name": "Себестоимость",
+                              "type": "numeric",
+                          };
+                          $i++;
+                      }
+                      if ($('#checkbox4').prop('checked') === true && $('#selectgroup').val() !== 'default' ||$('#selectgroup').val() !== 'statistic' || $('#selectgroup').val() !== ' ') {
+                          $arrObjects[$i] = {
+                              "name": "Доп затраты",
+                              "type": "numeric",
+                              "group_id": $('#selectgroup').val()
+                          };
+                          $i++;
+                      }else {
+                          $arrObjects[$i] = {
+                              "name": "Доп затраты",
+                              "type": "numeric",
+                          };
+                          $i++;
+                      }
+                      if ($('#checkbox5').prop('checked') === true && $('#selectgroup').val() !== 'default' ||$('#selectgroup').val() !== 'statistic' || $('#selectgroup').val() !== ' ') {
+                          $arrObjects[$i] = {
+                              "name": "Маржа",
+                              "type": "numeric",
+                              "group_id": $('#selectgroup').val()
+                          };
+                          $i++;
+                      }else {
+                          $arrObjects[$i] = {
+                              "name": "Маржа",
+                              "type": "numeric",
+                          };
+                          $i++;
+                      }
+                      // $.ajax({
+                      //     url: "/api/v4/leads/custom_fields",
+                      //     datatype: "application/json",
+                      //     method: "post",
+                      //     data:$arrObjects,
+                      //     success: (data) => {
+                      //         console.log('success');
+                      //         console.log(data);
+                      //         // data._embedded.custom_fields[0].id
+                      //         $idform = data;
+                      //
+                      //     },
+                      //     error:function (e) {
+                      //         console.log('error');
+                      //         console.log(e);
+                      //     }
+                      // });
+
                   }
 
 
